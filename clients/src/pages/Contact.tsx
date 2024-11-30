@@ -18,10 +18,26 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the form data to your server
-    console.log('Form submitted:', formData);
-    // Reset form after submission
-    setFormData({ name: '', email: '', message: '' });
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Something went wrong!');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    }
   };
 
   return (

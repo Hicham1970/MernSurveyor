@@ -32,8 +32,8 @@ app.post('/api/register', async (req, res) => {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    const db = client.db('marine_surveyor');
-    const usersCollection = db.collection('users');
+    const db = client.db('registerdb');
+    const usersCollection = db.collection('registercollection');
     
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
@@ -58,8 +58,8 @@ app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    const db = client.db('marine_surveyor');
-    const usersCollection = db.collection('users');
+    const db = client.db('registerdb');
+    const usersCollection = db.collection('registercollection');
     
     const user = await usersCollection.findOne({ email });
     if (!user) {
@@ -85,7 +85,7 @@ app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
     
-    const db = client.db('marine_surveyor');
+    const db = client.db('registerdb');
     const messagesCollection = db.collection('messages');
     
     const result = await messagesCollection.insertOne({
