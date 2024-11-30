@@ -11,8 +11,8 @@ const Footer: React.FC = () => {
           </div>
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h3 className="text-xl font-bold mb-2">Contact</h3>
-            <p>Email: info@marinesurveyor.com</p>
-            <p>Phone: +1 (555) 123-4567</p>
+            <p>Email: <a href="mailto:h.garoum@gmail.com" className="text-yellow-900 hover:underline">h.garoum@gmail.com</a></p>
+            <p>Phone: +(212) 663-796-630</p>
           </div>
           <div className="w-full md:w-1/3">
             <h3 className="text-xl font-bold mb-2">Follow Us</h3>

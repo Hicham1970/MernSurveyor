@@ -23,10 +23,33 @@ const Register: React.FC = () => {
       alert("Passwords don't match");
       return;
     }
-    // Here you would typically send the registration data to your server
-    console.log('Registration submitted:', formData);
-    // Reset form after submission
-    setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        alert(data.message); // 'User registered successfully'
+        setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+      } else {
+        alert(data.message); // Affiche le message d'erreur du serveur
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('An error occurred during registration');
+    }
   };
 
   return (

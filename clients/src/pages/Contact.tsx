@@ -50,15 +50,15 @@ const Contact: React.FC = () => {
           <div className="space-y-4">
             <div className="flex items-center">
               <Mail className="w-6 h-6 text-blue-900 mr-2" />
-              <span>info@marinesurveyor.com</span>
+              <a href="mailto:h.garoum@gmail.com" className="text-blue-900 hover:underline">h.garoum@gmail.com</a>
             </div>
             <div className="flex items-center">
               <Phone className="w-6 h-6 text-blue-900 mr-2" />
-              <span>+1 (555) 123-4567</span>
+              <span>+(212) 663-796-930</span>
             </div>
             <div className="flex items-center">
               <MapPin className="w-6 h-6 text-blue-900 mr-2" />
-              <span>123 Harbor Street, Portcity, PC 12345</span>
+              <span>123 Harbor Street, Portcity, PC 28905</span>
             </div>
           </div>
         </div>

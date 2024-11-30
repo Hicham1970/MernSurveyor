@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,10 +18,35 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the login data to your server
-    console.log('Login submitted:', formData);
-    // Reset form after submission
-    setFormData({ email: '', password: '' });
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Stocker le token dans le localStorage
+        localStorage.setItem('token', data.token);
+        alert('Login successful!');
+        setFormData({ email: '', password: '' });
+        // Redirection vers la page d'accueil
+        navigate('/');
+      } else {
+        alert(data.message); // Affiche le message d'erreur du serveur
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('An error occurred during login');
+    }
   };
 
   return (
