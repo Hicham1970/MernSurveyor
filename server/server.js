@@ -29,7 +29,13 @@ connectToDatabase();
 // User registration
 app.post('/api/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
+    
+    // Vérifier si les mots de passe correspondent
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+    }
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     
     const db = client.db('registerdb');
@@ -44,6 +50,7 @@ app.post('/api/register', async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      confirmPassword: hashedPassword,
     });
     
     res.status(201).json({ message: 'User registered successfully' });
